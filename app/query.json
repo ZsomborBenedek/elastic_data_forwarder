@@ -1,0 +1,42 @@
+{
+    "sort": [
+        {
+            "@timestamp": {
+                "order": "desc"
+            }
+        }
+    ],
+    "query": {
+        "bool": {
+            "filter": [
+                {
+                    "bool": {
+                        "filter": [
+                            {
+                                "match_phrase": {
+                                    "kibana.alert.workflow_status": "open"
+                                }
+                            },
+                            {
+                                "range": {
+                                    "@timestamp": {
+                                        "gte": "now-5m/m",
+                                        "lte": "now/m",
+                                        "format": "strict_date_optional_time"
+                                    }
+                                }
+                            }
+                        ],
+                        "must_not": [
+                            {
+                                "exists": {
+                                    "field": "kibana.alert.building_block_type"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}
