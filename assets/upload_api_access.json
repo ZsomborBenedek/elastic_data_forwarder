@@ -6,10 +6,10 @@
     "indices": [
       {
         "names": [
-          ".alerts-security.alerts-forwarded"
+          ".alerts-security.alerts_forwarded-*"
         ],
         "privileges": [
-          "create"
+          "all"
         ],
         "allow_restricted_indices": false
       }
@@ -25,10 +25,10 @@
     "remote_indices": [
       {
         "names": [
-          ".alerts-security.alerts-forwarded"
+          ".alerts-security.alerts_forwarded-*"
         ],
         "privileges": [
-          "create"
+          "all"
         ],
         "allow_restricted_indices": false,
         "clusters": [
