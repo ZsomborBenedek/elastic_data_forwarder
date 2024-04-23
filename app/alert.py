@@ -49,6 +49,5 @@ class AlertUploader(AlertHandler):
         Returns:
             str: Result of upload request.
         """
-
-        res = self.elastic.bulk(index=index, body=documents)
-        return res["result"]
+        for doc in documents:
+            res = self.elastic.index(index=index, document=doc)

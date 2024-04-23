@@ -20,7 +20,7 @@
                             {
                                 "range": {
                                     "@timestamp": {
-                                        "gte": "now-5m/m",
+                                        "gte": "now-d/m",
                                         "lte": "now/m",
                                         "format": "strict_date_optional_time"
                                     }

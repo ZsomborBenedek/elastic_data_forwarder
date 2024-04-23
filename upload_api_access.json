@@ -1,0 +1,40 @@
+{
+  "superuser": {
+    "cluster": [
+      "all"
+    ],
+    "indices": [
+      {
+        "names": [
+          ".alerts-security.alerts-forwarded"
+        ],
+        "privileges": [
+          "create"
+        ],
+        "allow_restricted_indices": false
+      }
+    ],
+    "applications": [],
+    "run_as": [
+      "*"
+    ],
+    "metadata": {},
+    "transient_metadata": {
+      "enabled": true
+    },
+    "remote_indices": [
+      {
+        "names": [
+          ".alerts-security.alerts-forwarded"
+        ],
+        "privileges": [
+          "create"
+        ],
+        "allow_restricted_indices": false,
+        "clusters": [
+          "*"
+        ]
+      }
+    ]
+  }
+}
