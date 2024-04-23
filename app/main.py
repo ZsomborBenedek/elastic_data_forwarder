@@ -32,9 +32,9 @@ def main():
         )
         deduplicator = Deduplicator(filename=DEDUP_FILE)
 
-        alerts = fetcher.fetch(INPUT_INDEX, QUERY)
+        docs = fetcher.fetch(INPUT_INDEX, QUERY)
+        alerts = [doc["_source"] for doc in docs]
         alerts = deduplicator.uniques(alerts)
-        alerts = [alert["_source"] for alert in alerts]
         uploader.upload(OUTPUT_INDEX, alerts)
         deduplicator.store(alerts)
 

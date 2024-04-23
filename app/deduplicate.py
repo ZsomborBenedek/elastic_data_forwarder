@@ -36,7 +36,8 @@ class Deduplicator:
         """
         with open(self.filename, "a+") as file:
             file.seek(0)
-            existing_hashes = [line.strip() for line in file]
+            existing_hashes = [line.strip("\n") for line in file.readlines()]
+
             deduplicated_list = [
                 item for item in input_list if self.get_md5(item) not in existing_hashes
             ]
