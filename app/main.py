@@ -1,5 +1,6 @@
 import os
 from alert import AlertFetcher, AlertUploader
+from deduplicate import Deduplicator
 from logger import ErrorLogger
 
 from dotenv import load_dotenv
@@ -18,6 +19,7 @@ def main():
     OUTPUT_API_KEY = str(os.environ.get("OUTPUT_API_KEY"))
 
     ERROR_LOGFILE = str(os.environ.get("ERROR_LOGFILE"))
+    DEDUP_FILE = str(os.environ.get("DEDUP_FILE"))
 
     error_logger = ErrorLogger(ERROR_LOGFILE, 4096, 5)
 
@@ -28,12 +30,13 @@ def main():
         uploader = AlertUploader(
             OUTPUT_ELASTICSEARCH, verify_certs=False, api_key=OUTPUT_API_KEY
         )
+        deduplicator = Deduplicator(filename=DEDUP_FILE)
 
         alerts = fetcher.fetch(INPUT_INDEX, QUERY)
-
+        alerts = deduplicator.uniques(alerts)
         alerts = [alert["_source"] for alert in alerts]
-
         uploader.upload(OUTPUT_INDEX, alerts)
+        deduplicator.store(alerts)
 
     except Exception as e:
         error_logger.log(str(e))

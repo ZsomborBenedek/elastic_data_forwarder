@@ -1,3 +1,4 @@
 .elk_af
 .env*
 *.pyc
+logs/
