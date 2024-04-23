@@ -3,6 +3,8 @@
 ### Usage
 
 ```sh
-docker build -t elkalertforwarder --rm .
-docker run --env-file .env -v ./logs/:/code/logs elkalertforwarder 
+docker build -t elkalertforwarder --rm . && docker run \
+    --env-file .env \
+    -v ./logs/:/forwarder/logs \
+    -v ./assets:/forwarder/assets elkalertforwarder
 ```

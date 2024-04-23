@@ -3,11 +3,11 @@ from alert import AlertFetcher, AlertUploader
 from deduplicate import Deduplicator
 from logger import ErrorLogger
 
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
 
 def main():
-    load_dotenv()
+    #load_dotenv()
     INPUT_ELASTICSEARCH = str(os.environ.get("INPUT_ELASTICSEARCH"))
     INPUT_INDEX = str(os.environ.get("INPUT_INDEX"))
     INPUT_API_KEY = str(os.environ.get("INPUT_API_KEY"))
