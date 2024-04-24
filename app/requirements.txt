@@ -1,2 +1,2 @@
-requests
 elasticsearch
+python-dotenv

@@ -1,23 +1,22 @@
+import json
 import os
+import sys
 from alert import AlertFetcher, AlertUploader
 from deduplicate import Deduplicator
 from logger import ErrorLogger
-
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 
 def main():
-    #load_dotenv()
+    if sys.argv[1:]:
+        load_dotenv(sys.argv[1])
     INPUT_ELASTICSEARCH = str(os.environ.get("INPUT_ELASTICSEARCH"))
     INPUT_INDEX = str(os.environ.get("INPUT_INDEX"))
     INPUT_API_KEY = str(os.environ.get("INPUT_API_KEY"))
-
     QUERY = str(os.environ.get("QUERY"))
-
     OUTPUT_ELASTICSEARCH = str(os.environ.get("OUTPUT_ELASTICSEARCH"))
     OUTPUT_INDEX = str(os.environ.get("OUTPUT_INDEX"))
     OUTPUT_API_KEY = str(os.environ.get("OUTPUT_API_KEY"))
-
     ERROR_LOGFILE = str(os.environ.get("ERROR_LOGFILE"))
     DEDUP_FILE = str(os.environ.get("DEDUP_FILE"))
 
@@ -32,7 +31,7 @@ def main():
         )
         deduplicator = Deduplicator(filename=DEDUP_FILE)
 
-        docs = fetcher.fetch(INPUT_INDEX, QUERY)
+        docs = fetcher.fetch(INPUT_INDEX, json.load(open(QUERY)))
         alerts = [doc["_source"] for doc in docs]
         alerts = deduplicator.uniques(alerts)
         uploader.upload(OUTPUT_INDEX, alerts)

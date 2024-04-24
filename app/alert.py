@@ -1,5 +1,4 @@
 from elasticsearch import Elasticsearch
-import json
 
 
 class AlertHandler:
@@ -33,7 +32,7 @@ class AlertFetcher(AlertHandler):
         Returns:
             list: List of document objects.
         """
-        res = self.elastic.search(index=index, body=json.load(open(body)))
+        res = self.elastic.search(index=index, body=body)
         return res["hits"]["hits"]
 
 
