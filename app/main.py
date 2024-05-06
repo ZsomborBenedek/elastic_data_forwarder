@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 def main():
     if sys.argv[1:]:
         load_dotenv(sys.argv[1])
+    TAG = str(os.environ.get("TAG"))
     INPUT_ELASTICSEARCH = str(os.environ.get("INPUT_ELASTICSEARCH"))
     INPUT_INDEX = str(os.environ.get("INPUT_INDEX"))
     INPUT_API_KEY = str(os.environ.get("INPUT_API_KEY"))
@@ -34,7 +35,8 @@ def main():
         docs = fetcher.fetch(INPUT_INDEX, json.load(open(QUERY)))
         alerts = [doc["_source"] for doc in docs]
         alerts = deduplicator.uniques(alerts)
-        uploader.upload(OUTPUT_INDEX, alerts)
+        enriched_alerts = [{**alert, "tag": TAG} for alert in alerts]
+        uploader.upload(OUTPUT_INDEX, enriched_alerts)
         deduplicator.store(alerts)
 
     except Exception as e:
